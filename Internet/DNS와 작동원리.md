@@ -33,11 +33,11 @@ DNS 서버는 IP 주소를 특정 도메인 주소와 같다는 기록을 저장
 ![image](https://user-images.githubusercontent.com/102791105/198924870-1a1bc844-c6b7-47bd-8955-3bb37022250d.png)
 
 - **Root DNS Server** : ICANN(국제 인터넷 관리기구)이 직접 관리하는 절대 존엄 서버, TLD DNS 서버 IP들을 저장해두고 안내한다
-- **TLD(최상위 도메인) DNS Server** : 도메인 등록 기관(Registry)이 관리하는 서버로, Authorized DNS 서버 주소를 저장해 두고 안내한다. 어떤 도메인 묶음이 어떤 Authorized DNS Server에 속하는지 아는 이유는 도메인 판매 업체(Register)의 DNS 설정이 변경되면 도메인 등록 기관으로 전달되기 때문
-- **Authorizative DNS Server** : 실제 개인 도메인과 IP 주소의 관계가 기록/저장/변경되는 서버. 일반적으로 도메인/호스팅 업체의 ‘네임서버’를 말하지만, 개인 DNS 서버 구축을 한 경우에도 여기에 해당한다
+- **TLD(최상위 도메인) DNS Server** : 도메인 등록 기관(Registry)이 관리하는 서버로, Authoritative DNS 서버 주소를 저장해 두고 안내한다. 어떤 도메인 묶음이 어떤 Authoritative DNS Server에 속하는지 아는 이유는 도메인 판매 업체(Register)의 DNS 설정이 변경되면 도메인 등록 기관으로 전달되기 때문
+- **Authoritative DNS Server** : 실제 개인 도메인과 IP 주소의 관계가 기록/저장/변경되는 서버. 일반적으로 도메인/호스팅 업체의 ‘네임서버’를 말하지만, 개인 DNS 서버 구축을 한 경우에도 여기에 해당한다
 - **Recursive DNS Server** : 인터넷 사용자가 가장 먼저 접근하는 DNS 서버. 위 3개의 서버를 생략하기 위해 한 번 거친 후 얻은 데이터를 일정 기간(TTL)동안 캐시로 저장해 두는 서버이다. KT/LG/SKT 등의 ISP DNS Server가 있고, 브라우저 우회 용도로 많이 쓰는 구글 DNS, 클라우드플레어와 같은 Public DNS 서버가 있다
 
-**브라우저는 캐시가 저장된 Recursion 서버를 사용하고, 실제 네임서버를 사용하는 곳은 Authorizative 서버이다**
+**브라우저는 캐시가 저장된 Recursion 서버를 사용하고, 실제 네임서버를 사용하는 곳은 Authoritative 서버이다**
 
 # DNS 동작 원리
 ![image](https://user-images.githubusercontent.com/102791105/198924887-033c779e-657a-45ae-ad96-64e8a843351e.png)

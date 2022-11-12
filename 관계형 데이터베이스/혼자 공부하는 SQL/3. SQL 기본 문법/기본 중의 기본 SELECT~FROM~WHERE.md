@@ -2,7 +2,7 @@
 
 데이터베이스를 선택하는 구문. 한 번 지정하면 계속 유지된다
 
-# SELECT~FROM~WHERE
+# SELECT ~ FROM ~ WHERE
 
 가장 기본적인 SQL으로, SELECT 다음에는 열 이름이, FROM 다음에는 테이블 이름이, WHERE 다음에는 다양한 조건식이 올 수 있다
 

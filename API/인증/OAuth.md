@@ -69,7 +69,7 @@ Google OAuth를 사용하기 위해서는 가장 먼저 프로젝트를 생성�
 
 - **client_id** : 처음 등록할 때 받은 Client ID
 - **client_secret** : 처음 등록할 때 받은 Client Secret
-- **grant_type** : 요청에 대한 응답 타입(Authorization Code Grant 방식을 이용하기 때문에 **`authorization_code`**를 입력)
+- **grant_type** : 요청에 대한 응답 타입(Authorization Code Grant 방식을 이용하기 때문에 `authorization_code`를 입력)
 - **code** : 디코딩한 코드값
 - **redirect_uri** : 사전에 등록한 리디렉션 될 주소
     

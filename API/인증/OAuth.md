@@ -27,7 +27,7 @@ OAuth는 Open Authorization(**개방된 권한**)의 줄임말이다.
 
 **Authorization Code Grant 방식**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4a54b106-20c2-42de-9b2b-69bb5e519dcd/Untitled.png)
+![image](https://user-images.githubusercontent.com/102791105/203034176-6b9f63c8-fa8e-450b-9490-813fc4fc1995.png)
 
 1. Resource Owner가 Client 서비스 이용을 위해 Client로 로그인 요청을 보낸다
 2. Client가 Authorization Server로 Redirect 시켜서 Resource Owner가 Authorization Server로 로그인을 할 수 있도록 한다
@@ -75,8 +75,8 @@ Google OAuth를 사용하기 위해서는 가장 먼저 프로젝트를 생성�
     
     ![https://velog.velcdn.com/images/softpeanut/post/d1658622-4e0d-45d8-b324-13e429074d3c/image.png](https://velog.velcdn.com/images/softpeanut/post/d1658622-4e0d-45d8-b324-13e429074d3c/image.png)
     
-1. 이제 토큰을 이용해 Resource Owner의 정보를 가져와야 한다. 아까 받은      `1/fFAGRNJru1FTz70BzhT3Zg`와 같은 토큰을 매개변수로 넣어 [https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=1/fFAGRNJru1FTz70BzhT3Zg](https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=1/fFAGRNJru1FTz70BzhT3Zg) 처럼 요청을 보낸다.
-2. 아까 설정한 scope에 따라 Resource Server(구글)로부터 정보를 받아온다. 해당 토큰을 다시 사용할 일이 있다면 별도의 저장소(redis 등)에 저장을 하면 되고, 1회성으로 Resource Owner(사용자)의 정보를 받아오고 끝낸다면 별도로 저장하지 않는다. Resource Owner(사용자)가 우리 서비스를 사용할 수 있도록 JWT를 발급하여 반환해야 한다.
+5. 이제 토큰을 이용해 Resource Owner의 정보를 가져와야 한다. 아까 받은      `1/fFAGRNJru1FTz70BzhT3Zg`와 같은 토큰을 매개변수로 넣어 [https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=1/fFAGRNJru1FTz70BzhT3Zg](https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=1/fFAGRNJru1FTz70BzhT3Zg) 처럼 요청을 보낸다.
+6. 아까 설정한 scope에 따라 Resource Server(구글)로부터 정보를 받아온다. 해당 토큰을 다시 사용할 일이 있다면 별도의 저장소(redis 등)에 저장을 하면 되고, 1회성으로 Resource Owner(사용자)의 정보를 받아오고 끝낸다면 별도로 저장하지 않는다. Resource Owner(사용자)가 우리 서비스를 사용할 수 있도록 JWT를 발급하여 반환해야 한다.
 
 이렇게 하면 Resource Owner가 직접 회원가입을 하지 않고도 로그인을 할 수 있고 Resource Server(구글)에서 받아온 정보로 자동으로 회원가입을 할 수도 있다.
 

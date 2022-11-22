@@ -1,4 +1,5 @@
 # OAuth란
+![image](https://user-images.githubusercontent.com/102791105/203213258-b8e20211-aeb4-4b81-8ee1-1e9491fdbd7f.png)
 
 OAuth는 Open Authorization(**개방된 권한**)의 줄임말이다.
 

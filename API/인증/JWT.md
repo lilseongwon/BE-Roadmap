@@ -88,15 +88,30 @@ JWT는 기본적으로 IdP에서 특정 유저의 identity를 증명하기 위�
 
 10, 11. 서버가 Access Token이 만료됨을 확인하고 권한없음을 신호로 보낸다
 
-11. 사용자는 Refresh Token과 함께 Access Token을 서버로 보내며 Access Token 발급 요청을 한다.
-12. 서버에서는 우선 Access Token이 조작되었는지 확인한 후, **사용자가 보낸 Refresh Token과 DB에 저장되어있는 Refresh Token을 비교한다. Token이 동일**하고 **유효기간도 지나지 않았다면** Access Token을 새로 발급한다.
-13. 사용자는 새로운 Access Token을 헤더에 실어 다시 API 요청을 진행한다.
+12. 사용자는 Refresh Token과 함께 Access Token을 서버로 보내며 Access Token 발급 요청을 한다.
+13. 서버에서는 우선 Access Token이 조작되었는지 확인한 후, **사용자가 보낸 Refresh Token과 DB에 저장되어있는 Refresh Token을 비교한다. Token이 동일**하고 **유효기간도 지나지 않았다면** Access Token을 새로 발급한다.
+14. 사용자는 새로운 Access Token을 헤더에 실어 다시 API 요청을 진행한다.
 
-### Access Token
+---
+
+## Authorization 헤더 중 대표적인 종류 2가지
+### Basic
+사용자 ID와 PW를 Base64로 인코딩한 값을 토큰으로 사용한다. (RFC 7617)
+
+Basic 토큰 값이 노출이 되면 ID, PW가 노출되는 것이기 때문에 보안에 취약하다.
+### Bearer
+일반적으로 JWT(RFC 7519) 같은 OAuth 토큰을 사용한다. (RFC 6750)
+
+- Basic 방식과는 달리 토큰에 ID, PW 값을 넣지 않는다.
+- 로그인 시 토큰을 부여받고, 이후 요청할 때 요청 헤더에 토큰을 실어서 보낸다.
+- 세션 저장소가 필요가 없고, 토큰 자체에 내장이 되어있다.
+- STATELESS, 무결성, 보안성이 장점
+
+## Access Token
 
 - 권한/ 인증에 대한 Token을 말한다.
 
-### Refresh Token
+## Refresh Token
 
 액세스 토큰이 제 3자에게 탈취당할 경우 유효기간이 만료될 때까지 계속 정보가 털린다는 단점을 보완하기 위해 만들었다. 
 

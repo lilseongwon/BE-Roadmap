@@ -25,6 +25,10 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery; //todo 배송정보
+
     @Temporal(TemporalType.TIMESTAMP)//todo 주문 날짜
     private Date orderDate;
 

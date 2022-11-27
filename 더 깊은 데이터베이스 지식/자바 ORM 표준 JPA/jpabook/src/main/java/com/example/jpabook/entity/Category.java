@@ -1,5 +1,6 @@
 package com.example.jpabook.entity;
 
+import com.example.jpabook.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 

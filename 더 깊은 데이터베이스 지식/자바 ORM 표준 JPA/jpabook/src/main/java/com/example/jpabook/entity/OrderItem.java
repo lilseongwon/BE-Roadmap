@@ -1,5 +1,6 @@
 package com.example.jpabook.entity;
 
+import com.example.jpabook.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,3 +28,5 @@ public class OrderItem {
     private int orderPrice; // todo 주문 가격
     private int count; //todo 주문 수량
 }
+
+

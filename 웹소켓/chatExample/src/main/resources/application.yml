@@ -1,0 +1,32 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/DockerTest?serverTimezone=Asia/Seoul
+    username: root
+    password: seongwon1290!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      format_sql: true
+      generate-ddl: false
+    defer-datasource-initialization: true
+    show-sql: false
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+socket:
+  port: 8081
+
+redis:
+  port: 6379
+  host: localhost
+
+jwt:
+  header: Authorization
+  prefix : Bearer
+  secret-key: asdfszdfghjkftvargoqw4gbfdapvawgoiqgboiabvaoifadsogndsoingvds
+  access-exp: 400000
+  refresh-exp: 4000000

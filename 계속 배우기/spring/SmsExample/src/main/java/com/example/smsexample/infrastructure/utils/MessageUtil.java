@@ -33,7 +33,7 @@ public class MessageUtil {
 
             HashMap<String, String> params = new HashMap<>();
             params.put("to", phoneNumber);
-            params.put("from", coolsmsProperties.getSender());
+            params.put("from", coolsmsProperties.getSenderNumber());
             params.put("type", "SMS");
             params.put("text", "인증번호는 [" + code + "] 입니다.");
 

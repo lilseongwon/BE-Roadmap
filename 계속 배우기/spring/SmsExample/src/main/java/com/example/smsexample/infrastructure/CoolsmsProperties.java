@@ -13,5 +13,5 @@ public class CoolsmsProperties {
 
     private final String apiKey;
     private final String apiSecret;
-    private final String sender;
+    private final String senderNumber;
 }

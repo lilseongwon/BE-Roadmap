@@ -1,30 +1,19 @@
-server:
-
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${USERNAME}
-    password: ${PASSWORD}
+    url: jdbc:mysql://localhost:3306/practice?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: seongwon1290!
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
-
-  jackson:
-    property-naming-strategy: SNAKE_CASE
 
 cloud:
   aws:
     credentials:
-      access_key: ${S3_ACCESS_KEY}
-      secret_key: ${S3_SECRET_KEY}
+      access_key: AKIA5GPRGYJ2PIWEGI5V
+      secret_key: 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
     s3:
-      bucket: ${S3_BUCKET}
+      bucket: seongwon-practice
     region:
-      static: ${S3_REGION}
+      static: ap-northeast-2
     stack:
       auto: false
 

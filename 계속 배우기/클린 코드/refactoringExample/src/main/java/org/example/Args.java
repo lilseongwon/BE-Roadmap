@@ -133,70 +133,66 @@ public class Args {
     }
 
     private boolean setArgument(char argChar) throws ArgsException {
-        if (isBooleanArg(argChar))
-            setBooleanArg(argChar, true);
-        else if (isStringArg(argChar))
-            setStringArg(argChar);
-        else if (isIntArg(argChar))
-            setIntArg(argChar);
+        ArgumentMarshaler m = marshalers.get(argChar);
+        try {
+        if (m instanceof BooleanArgumentMarshaler)
+            setBooleanArg(m);
+        else if (m instanceof StringArgumentMarshaler)
+            setStringArg(m);
+        else if (m instanceof IntegerArgumentMarshaler)
+            setIntArg(m);
         else
             return false;
-
+        } catch (ArgsException e) {
+            valid = false;
+            errorArgumentId = argChar;
+            throw e;
+        }
         return true;
     }
 
-    private boolean isIntArg(char argChar) {
-        ArgumentMarshaler m = marshalers.get(argChar);
+    private boolean isIntArg(ArgumentMarshaler m) {
         return m instanceof IntegerArgumentMarshaler;
     }
 
-    private void setIntArg(char argChar) throws ArgsException {
+    private void setIntArg(ArgumentMarshaler m) throws ArgsException {
         currentArgument++;
         String parameter = null;
         try {
             parameter = args[currentArgument];
-            intArgs.get(argChar).set(parameter);
+            m.set(parameter);
         } catch (ArrayIndexOutOfBoundsException e) {
-            valid = false;
-            errorArgumentId = argChar;
-            errorParameter = parameter;
-            errorCode = ErrorCode.INVALID_INTEGER;
+            errorCode = ErrorCode.MISSING_INTEGER;
             throw new ArgsException();
         } catch (ArgsException e) {
-            valid = false;
-            errorArgumentId = argChar;
             errorParameter = parameter;
             errorCode = ErrorCode.INVALID_INTEGER;
             throw e;
         }
     }
 
-    private void setStringArg(char argChar) throws ArgsException {
+    private void setStringArg(ArgumentMarshaler m) throws ArgsException {
         currentArgument++;
         try {
-            stringArgs.get(argChar).set(args[currentArgument]);
+            m.set(args[currentArgument]);
         } catch (ArrayIndexOutOfBoundsException e) {
-            valid = false;
-            errorArgumentId = argChar;
             errorCode = ErrorCode.MISSING_STRING;
             throw new ArgsException();
         }
     }
 
-    private boolean isStringArg(char argChar) {
-        ArgumentMarshaler m = marshalers.get(argChar);
+    private boolean isStringArg(ArgumentMarshaler m) {
         return m instanceof StringArgumentMarshaler;
     }
 
-    private void setBooleanArg(char argChar, boolean value) {
+    private void setBooleanArg(ArgumentMarshaler m) {
         try {
-            booleanArgs.get(argChar).set("true");
+            m.set("true"); //이전 코드: booleanArgs.get(argChar).set("true")
         } catch (ArgsException e) {
         }
     }
 
-    private boolean isBooleanArg(char argChar) {
-        ArgumentMarshaler m = marshalers.get(argChar);
+    private boolean isBooleanArg(ArgumentMarshaler m) {
         return m instanceof BooleanArgumentMarshaler;
     }
 

@@ -70,18 +70,6 @@ public class Args {
         }
     }
 
-    private void parseBooleanSchemaElement(char elementId) {
-        marshalers.put(elementId, new BooleanArgumentMarshaler());
-    }
-
-    private void parseIntegerSchemaElement(char elementId) {
-        marshalers.put(elementId, new IntegerArgumentMarshaler());
-    }
-
-    private void parseStringSchemaElement(char elementId) {
-        marshalers.put(elementId, new StringArgumentMarshaler());
-    }
-
     private boolean isStringSchemaElement(String elementTail) {
         return elementTail.equals("*");
     }
@@ -141,10 +129,6 @@ public class Args {
         return true;
     }
 
-    private boolean isIntArg(ArgumentMarshaler m) {
-        return m instanceof IntegerArgumentMarshaler;
-    }
-
     private void setIntArg(ArgumentMarshaler m) throws ArgsException {
         currentArgument++;
         String parameter = null;
@@ -171,19 +155,11 @@ public class Args {
         }
     }
 
-    private boolean isStringArg(ArgumentMarshaler m) {
-        return m instanceof StringArgumentMarshaler;
-    }
-
     private void setBooleanArg(ArgumentMarshaler m) {
         try {
             m.set("true"); //이전 코드: booleanArgs.get(argChar).set("true")
         } catch (ArgsException e) {
         }
-    }
-
-    private boolean isBooleanArg(ArgumentMarshaler m) {
-        return m instanceof BooleanArgumentMarshaler;
     }
 
     public int cardinality() {
@@ -224,9 +200,32 @@ public class Args {
         return message.toString();
     }
 
+    public boolean getBoolean(char arg) {
+        Args.ArgumentMarshaler am = marshalers.get(arg);
+        boolean b = false;
+        try {
+            b = am != null && (Boolean) am.get();
+        } catch (ClassCastException e) {
+            b = false;
+        }
+        return b;
+    }
 
-    public boolean has(char arg) {
-        return argsFound.contains(arg);
+    public String getString(char arg) {
+        Args.ArgumentMarshaler am = marshalers.get(arg);
+        try {
+            return am == null ? "" : (String) am.get();
+        } catch (ClassCastException e) {
+            return "";
+        }
+    }
+    public int getInt(char arg) {
+        Args.ArgumentMarshaler am = marshalers.get(arg);
+        try {
+            return am == null ? 0 : (Integer) am.get();
+        } catch (ClassCastException e) {
+            return 0;
+        }
     }
 
     public boolean isValid() {
@@ -236,29 +235,6 @@ public class Args {
     private class ArgsException extends Exception {}
 
     private abstract class ArgumentMarshaler {
-        protected boolean booleanValue = false;
-        private String stringValue;
-        private int integerValue;
-
-        public boolean getBoolean() {
-            return booleanValue;
-        }
-
-        public void setString(String s) {
-            stringValue = s;
-        }
-
-        public String getString() {
-            return stringValue == null ? "" : stringValue;
-        }
-
-        public void setInteger(int i) {
-            integerValue = i;
-        }
-
-        public int getInteger() {
-            return integerValue;
-        }
 
         public abstract void set(String s) throws ArgsException;
 
@@ -267,17 +243,6 @@ public class Args {
 
     private class BooleanArgumentMarshaler extends ArgumentMarshaler {
         private boolean booleanValue = false;
-
-        public boolean getBoolean(char arg) {
-            Args.ArgumentMarshaler am = marshalers.get(arg);
-            boolean b = false;
-            try {
-                b = am != null && (Boolean) am.get();
-            } catch (ClassCastException e) {
-                b = false;
-            }
-            return b;
-        }
 
         public void set(String s) {
             booleanValue = true;
@@ -291,15 +256,6 @@ public class Args {
     private class StringArgumentMarshaler extends ArgumentMarshaler {
         private String stringValue = "";
 
-        public String getString(char arg) {
-            Args.ArgumentMarshaler am = marshalers.get(arg);
-            try {
-                return am == null ? "" : (String) am.get();
-            } catch (ClassCastException e) {
-                return "";
-            }
-        }
-
         public void set(String s) {
             stringValue = s;
         }
@@ -311,15 +267,6 @@ public class Args {
 
     private class IntegerArgumentMarshaler extends ArgumentMarshaler {
         private int intValue = 0;
-
-        public int getString(char arg) {
-            Args.ArgumentMarshaler am = marshalers.get(arg);
-            try {
-                return am == null ? 0 : (Integer) am.get();
-            } catch (ClassCastException e) {
-                return 0;
-            }
-        }
 
         public void set(String s) throws ArgsException {
             try {

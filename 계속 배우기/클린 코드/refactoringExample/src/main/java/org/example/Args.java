@@ -124,30 +124,6 @@ public class Args {
         }
     }
 
-    private void setIntArg(ArgumentMarshaler m) throws ArgsException {
-        String parameter = null;
-        try {
-            parameter = currentArgument.next();
-            m.set(parameter);
-        } catch (NoSuchElementException e) {
-            errorCode = ErrorCode.MISSING_INTEGER;
-            throw new ArgsException();
-        } catch (ArgsException e) {
-            errorParameter = parameter;
-            errorCode = ErrorCode.INVALID_INTEGER;
-            throw e;
-        }
-    }
-
-    private void setStringArg(ArgumentMarshaler m) throws ArgsException {
-        try {
-            m.set(currentArgument.next());
-        } catch (NoSuchElementException e) {
-            errorCode = ErrorCode.MISSING_STRING;
-            throw new ArgsException();
-        }
-    }
-
     public int cardinality() {
         return argsFound.size();
     }
@@ -222,22 +198,17 @@ public class Args {
     private class ArgsException extends Exception {
     }
 
-    private abstract class ArgumentMarshaler {
-        public abstract void set(Iterator<String> currentArgument) throws ArgsException;
+    private interface ArgumentMarshaler {
+        void set(Iterator<String> currentArgument) throws ArgsException;
 
-        public abstract void set(String s) throws ArgsException;
-
-        public abstract Object get();
+        Object get();
     }
 
-    private class BooleanArgumentMarshaler extends ArgumentMarshaler {
+    private class BooleanArgumentMarshaler implements ArgumentMarshaler {
         private boolean booleanValue = false;
 
         public void set(Iterator<String> currentArgument) throws ArgsException {
             booleanValue = true;
-        }
-
-        public void set(String s) {
         }
 
         public Object get() {
@@ -245,7 +216,7 @@ public class Args {
         }
     }
 
-    private class StringArgumentMarshaler extends ArgumentMarshaler {
+    private class StringArgumentMarshaler implements ArgumentMarshaler {
         private String stringValue = "";
 
         public void set(Iterator<String> currentArgument) throws ArgsException {
@@ -257,37 +228,25 @@ public class Args {
             }
         }
 
-        public void set(String s) {
-            stringValue = s;
-        }
-
         public Object get() {
             return stringValue;
         }
     }
 
-    private class IntegerArgumentMarshaler extends ArgumentMarshaler {
+    private class IntegerArgumentMarshaler implements ArgumentMarshaler {
         private int intValue = 0;
 
         public void set(Iterator<String> currentArgument) throws ArgsException {
             String parameter = null;
             try {
                 parameter = currentArgument.next();
-                set(parameter);
+                intValue = Integer.parseInt(parameter);
             } catch (NoSuchElementException e) {
                 errorCode = ErrorCode.MISSING_INTEGER;
                 throw new ArgsException();
-            } catch (ArgsException e) {
+            } catch (NumberFormatException e) {
                 errorParameter = parameter;
                 errorCode = ErrorCode.INVALID_INTEGER;
-                throw e;
-            }
-        }
-
-        public void set(String s) throws ArgsException {
-            try {
-                intValue = Integer.parseInt(s);
-            } catch (NumberFormatException e) {
                 throw new ArgsException();
             }
         }

@@ -83,7 +83,7 @@ public class Args {
     }
 
     private boolean parseArguments() throws ArgsException {
-        for (currentArgument = argsList.iterator(); currentArgument.hasNext();) {
+        for (currentArgument = argsList.iterator(); currentArgument.hasNext(); ) {
             String arg = currentArgument.next();
             parseArgument(arg);
         }
@@ -115,18 +115,13 @@ public class Args {
         if (m == null)
             return false;
         try {
-        if (m instanceof BooleanArgumentMarshaler)
             m.set(currentArgument);
-        else if (m instanceof StringArgumentMarshaler)
-            m.set(currentArgument);
-        else if (m instanceof IntegerArgumentMarshaler)
-            m.set(currentArgument);
+            return true;
         } catch (ArgsException e) {
             valid = false;
             errorArgumentId = argChar;
             throw e;
         }
-        return true;
     }
 
     private void setIntArg(ArgumentMarshaler m) throws ArgsException {
@@ -210,6 +205,7 @@ public class Args {
             return "";
         }
     }
+
     public int getInt(char arg) {
         Args.ArgumentMarshaler am = marshalers.get(arg);
         try {
@@ -223,7 +219,8 @@ public class Args {
         return valid;
     }
 
-    private class ArgsException extends Exception {}
+    private class ArgsException extends Exception {
+    }
 
     private abstract class ArgumentMarshaler {
         public abstract void set(Iterator<String> currentArgument) throws ArgsException;
@@ -286,7 +283,7 @@ public class Args {
                 throw e;
             }
         }
-        
+
         public void set(String s) throws ArgsException {
             try {
                 intValue = Integer.parseInt(s);
